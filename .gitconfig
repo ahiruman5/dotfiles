@@ -1,0 +1,20 @@
+[alias]
+    co = checkout
+    ci = commit
+    st = status
+    br = branch
+    di = diff --no-ext-diff
+	lg = log --graph --all --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+[color]
+    ui = auto
+    diff = auto
+[core]
+    pager =
+    editor = vim
+[diff]
+    external = git_diff_wrapper
+[pager]
+    diff =
+[user]
+    name = ahiruman5
+    email = ahiruman5@gmail.com
