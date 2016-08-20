@@ -22,7 +22,19 @@ if [ ! -d ~/.zsh/bin/ ]
 then
     mkdir ~/.zsh/bin/
 fi
-ln -sf ${CURRENT}/.zsh/bin/peco ~/.zsh/bin/
+
+#MacとLinuxでそれぞれ別のpecoを利用
+case ${OSTYPE} in
+    darwin*)
+        #Mac用の設定
+        ln -sf ${CURRENT}/.zsh/bin/peco/mac/peco ~/.zsh/bin/
+        ;;
+    linux*)
+        #Linux用の設定
+        ln -sf ${CURRENT}/.zsh/bin/peco/linux/peco ~/.zsh/bin/
+        ;;
+esac
+
 
 if [ ! -d ~/bin/ ]
 then
