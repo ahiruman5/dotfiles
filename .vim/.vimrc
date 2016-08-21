@@ -41,7 +41,10 @@ NeoBundleCheck
 "-------------------------
 
 " molokaiを適用
+if isdirectory(expand("~/.vim/bundle/molokai/"))
 colorscheme molokai
+endif
+
 set t_Co=256 " iTermなど既に256色環境なら無くても良い
 syntax enable " 構文に色を付ける
 
