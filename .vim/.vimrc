@@ -27,6 +27,8 @@ NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'Yggdroot/indentLine'
 " 末尾の全角半角空白文字を赤くハイライト
 NeoBundle 'bronson/vim-trailing-whitespace'
+" コードの自動補完
+NeoBundle 'Shougo/neocomplete.vim'
 
 call neobundle#end()
 
@@ -41,8 +43,8 @@ NeoBundleCheck
 "-------------------------
 
 " molokaiを適用
-if isdirectory(expand("~/.vim/bundle/molokai/"))
-colorscheme molokai
+if neobundle#is_installed('molokai')
+    colorscheme molokai
 endif
 
 set t_Co=256 " iTermなど既に256色環境なら無くても良い
@@ -93,8 +95,8 @@ set hidden "変更中のバッファを保存しないで他のバッファを�
 "----------------------------------------------------------
 " タブ・インデント
 "----------------------------------------------------------
-set tabstop=4 "ファイル内の <Tab> が対応する空白の数
-set softtabstop=4 "<Tab> キーをおした時に挿入されるスペース数
+set tabstop=4 "ファイル内のタブが対応する空白の数
+set softtabstop=4 "タブキーを押した時に挿入されるスペース数
 set autoindent "新しい行のインデントを自動実行
 set smartindent " 高度な自動インデント
 set shiftwidth=4 "インデントの自動実行するスペース数
@@ -167,3 +169,27 @@ augroup SetFiletypePHP
     autocmd BufNewFile,BufRead *.tpl        setlocal filetype=php
     autocmd BufNewFile,BufRead *.html       setlocal filetype=php
 augroup END
+
+
+
+" neocompleteを有効にする
+let g:neocomplete#enable_at_startup = 1
+" smartcase有効化. 大文字が入力されるまで大文字小文字の区別を無視する
+let g:neocomplete#enable_smart_case = 1
+" camelcase有効化. 大文字区切り
+let g:neocomplete#enable_camel_case_completion = 1
+" ポップアップメニューで表示される候補の数. デフォルトは100
+" let g:neocomplete#max_list = 20
+" ちょっとかゆいとこまで補完. 「neocomplete」が「neocomplete#」まで補完してくれる
+let g:neocomplete#enable_auto_delimiter = 1
+
+" バックスペースで補完のポップアップを閉じる
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+" エンターキーで補完候補の確定
+inoremap <expr><CR>   pumvisible() ? "\<C-y>" : "<CR>"
+" タブキーで補完候補の選択
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" TODO: has('lua')でneocompleteを制御
+" TODO: 遅延ロードを入れる
+" TODO: neo-snippetの調査
+" TODO: ctags調査
