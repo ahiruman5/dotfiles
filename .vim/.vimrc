@@ -27,12 +27,10 @@ NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'Yggdroot/indentLine'
 " 末尾の全角半角空白文字を赤くハイライト
 NeoBundle 'bronson/vim-trailing-whitespace'
-" コードの自動補完
-NeoBundle 'Shougo/neocomplete.vim'
 
 if has('lua')
-    " neocompleteでNode.jsも補完してくれるようにする
-    NeoBundle 'myhere/vim-nodejs-complete'
+    " コードの自動補完
+    NeoBundle 'Shougo/neocomplete.vim'
     " スニペットの補完機能
     NeoBundle "Shougo/neosnippet"
     " スニペット集
