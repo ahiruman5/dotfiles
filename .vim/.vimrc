@@ -29,6 +29,12 @@ NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'bronson/vim-trailing-whitespace'
 " コードの自動補完
 NeoBundle 'Shougo/neocomplete.vim'
+" neocompleteでNode.jsも補完してくれるようにする
+NeoBundle 'myhere/vim-nodejs-complete'
+" スニペットの補完機能
+NeoBundle "Shougo/neosnippet"
+" スニペット集
+NeoBundle 'Shougo/neosnippet-snippets'
 
 call neobundle#end()
 
@@ -124,6 +130,9 @@ nnoremap <up> gk
 " backspaceキーの有効化
 set backspace=indent,eol,start
 
+" カーソルラインをハイライト
+set cursorline
+
 "----------------------------------------------------------
 " カッコ・タグの対応
 "----------------------------------------------------------
@@ -176,20 +185,13 @@ augroup END
 let g:neocomplete#enable_at_startup = 1
 " smartcase有効化. 大文字が入力されるまで大文字小文字の区別を無視する
 let g:neocomplete#enable_smart_case = 1
-" camelcase有効化. 大文字区切り
-let g:neocomplete#enable_camel_case_completion = 1
-" ポップアップメニューで表示される候補の数. デフォルトは100
-" let g:neocomplete#max_list = 20
 " ちょっとかゆいとこまで補完. 「neocomplete」が「neocomplete#」まで補完してくれる
 let g:neocomplete#enable_auto_delimiter = 1
-
+" 1文字目の入力から補完のポップアップを表示
+let g:neocomplete#auto_completion_start_length = 1
 " バックスペースで補完のポップアップを閉じる
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-" エンターキーで補完候補の確定
-inoremap <expr><CR>   pumvisible() ? "\<C-y>" : "<CR>"
-" タブキーで補完候補の選択
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" TODO: has('lua')でneocompleteを制御
-" TODO: 遅延ロードを入れる
-" TODO: neo-snippetの調査
-" TODO: ctags調査
+" エンターキーで補完候補の確定. スニペットの展開もエンターキーで確定
+imap <expr><CR> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-y>" : "<CR>"
+" タブキーで補完候補の選択. スニペット内のジャンプもタブキーでジャンプ
+imap <expr><TAB> pumvisible() ? "\<C-n>" : neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
