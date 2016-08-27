@@ -181,7 +181,7 @@ augroup SetFiletypePHP
 augroup END
 
 
-if neobundle#is_installed('neocomplete')
+if neobundle#is_installed('neocomplete.vim')
     " neocompleteを有効にする
     let g:neocomplete#enable_at_startup = 1
     " smartcase有効化. 大文字が入力されるまで大文字小文字の区別を無視する
