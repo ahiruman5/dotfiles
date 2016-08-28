@@ -1,8 +1,8 @@
 set nocompatible               " vi互換のVimとして動作. これが無いとプラグインが動作しなくなったりするが、最近はなくてもいいらしい
 
-"---------------------------
-" Start Neobundle Settings.
-"---------------------------
+"----------------------------------------------------------
+" Neobundle
+"----------------------------------------------------------
 if has('vim_starting')
     " 初回起動時のみruntimepathにneobundleのパスを指定する
     set runtimepath+=~/.vim/bundle/neobundle.vim/
@@ -28,6 +28,7 @@ NeoBundle 'Yggdroot/indentLine'
 " 末尾の全角半角空白文字を赤くハイライト
 NeoBundle 'bronson/vim-trailing-whitespace'
 
+" lua付きvimの時だけ以下のプラグインをインストールする. 「vim --version | grep lua」で確認
 if has('lua')
     " コードの自動補完
     NeoBundle 'Shougo/neocomplete.vim'
@@ -45,59 +46,42 @@ filetype plugin indent on
 " 未インストールのプラグインがある場合、インストールするかどうかを尋ねてくれるようにする設定
 NeoBundleCheck
 
-"-------------------------
-" End Neobundle Settings.
-"-------------------------
-
-" molokaiを適用
+"----------------------------------------------------------
+" カラースキーム
+"----------------------------------------------------------
 if neobundle#is_installed('molokai')
-    colorscheme molokai
+    colorscheme molokai " カラースキームにmolokaiを設定する
 endif
 
-set t_Co=256 " iTermなど既に256色環境なら無くても良い
+set t_Co=256 " iTerm2など既に256色環境なら無くても良い
 syntax enable " 構文に色を付ける
 
-set encoding=utf-8 " TODO
-set fileencoding=utf-8 " TODO
-scriptencoding utf-8 " Vim Script内で使用するエンコーディングを指定. vimrcもそのひとつ
-
-set fileencodings=ucs-boms,utf-8,euc-jp,cp932 " ファイルエンコーディングの自動判別対象を指定. 左側が優先される TODO
-
-" 改行コードの自動認識
-set fileformats=unix,dos,mac
+"----------------------------------------------------------
+" 文字
+"----------------------------------------------------------
+set encoding=utf-8 " 読み込み時の文字コード
+set fileencoding=utf-8 " 保存時の文字コード
+set fileencodings=ucs-boms,utf-8,euc-jp,cp932 " 読み込み時の文字コードの自動判別. 左側が優先される
+scriptencoding utf-8 " Vim Script内で使用する文字コードを指定.
+set fileformats=unix,dos,mac " 改行コードの自動判別
 
 " □や○の文字があってもカーソル位置がずれないようにする
 " iTerm2を使ってる場合は設定から「Treat ambiguous-width characters as double width」にチェックする必要がある
 set ambiwidth=double
 
 "----------------------------------------------------------
-" 表示
+" ステータスライン
 "----------------------------------------------------------
+set laststatus=2 " ステータスラインを常に表示
 set showmode "現在のモードを表示
 set showcmd "打ったコマンドをステータスラインの下に表示
-set number " 行番号を表示
 set ruler " ステータスラインの右側にカーソルの位置を表示する
-
-" ステータスラインを常に表示
-set laststatus=2
 
 "----------------------------------------------------------
 " コマンドモード
 "----------------------------------------------------------
 set wildmode=list:full "コマンドモードの補完
 set history=5000 "保存する履歴の数
-"前方一致検索をCtrl+PとCtrl+Nで TODO neocomplete入れたら使わなくていいかも
-cnoremap <C-P> <UP>
-cnoremap <C-N> <DOWN>
-
-"----------------------------------------------------------
-" バッファの切り替え TODO 使ってないから要らないかも
-"----------------------------------------------------------
-nnoremap <C-n> :bn<CR>
-nnoremap <C-p> :bp<CR>
-set hidden "変更中のバッファを保存しないで他のバッファを表示
-
-
 
 "----------------------------------------------------------
 " タブ・インデント
@@ -110,18 +94,23 @@ set shiftwidth=4 "インデントの自動実行するスペース数
 set expandtab " タブをスペースに変換する
 
 "----------------------------------------------------------
-" 検索
+" 文字列検索
 "----------------------------------------------------------
 set incsearch " インクリメンタルサーチ. １文字入力毎に検索を行う
 set ignorecase "検索パターンに大文字を含まなければ大文字小文字を区別しない
 set smartcase "検索パターンに大文字を含んでいたら大文字小文字を区別する
 set hlsearch "検索結果をハイライト
+
 " ESCキー2度押しでハイライトを無効化
 nnoremap <Esc><Esc> :<C-u>set nohlsearch!<CR>
 
 "----------------------------------------------------------
 " カーソル
 "----------------------------------------------------------
+set whichwrap=b,s,h,l,<,>,[,],~ "矢印キーで自由に移動
+set number " 行番号を表示
+set cursorline " カーソルラインをハイライト
+
 "行が折り返し表示されていた場合、行単位ではなく表示行単位でカーソルを移動する
 nnoremap j gj
 nnoremap k gk
@@ -131,9 +120,6 @@ nnoremap <up> gk
 " backspaceキーの有効化
 set backspace=indent,eol,start
 
-" カーソルラインをハイライト
-set cursorline
-
 "----------------------------------------------------------
 " カッコ・タグの対応
 "----------------------------------------------------------
@@ -141,13 +127,13 @@ set showmatch "括弧の対応関係を一瞬表示する
 source $VIMRUNTIME/macros/matchit.vim "HTMLタグをマッチさせる
 
 "----------------------------------------------------------
-" マウスでカーソル移動
+" マウスでカーソル移動とスクロール
 "----------------------------------------------------------
 if has('mouse')
     set mouse=a
     if has('mouse_sgr')
         set ttymouse=sgr
-    elseif v:version > 703 || v:version is 703 && has('patch632') " I couldn't use has('mouse_sgr') :-(
+    elseif v:version > 703 || v:version is 703 && has('patch632')
         set ttymouse=sgr
     else
         set ttymouse=xterm2
@@ -155,10 +141,8 @@ if has('mouse')
 endif
 
 "----------------------------------------------------------
-" マップ
+" クリップボードからのペースト
 "----------------------------------------------------------
-set whichwrap=b,s,h,l,<,>,[,],~ "矢印で自由に移動
-
 " 挿入モードでクリップボードからペーストする時に自動でインデントさせないようにする
 if &term =~ "xterm"
     let &t_SI .= "\e[?2004h"
@@ -173,14 +157,9 @@ if &term =~ "xterm"
     inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
 endif
 
-" tplとhtml拡張子はファイルタイプをphpとして判定
-augroup SetFiletypePHP
-    autocmd!
-    autocmd BufNewFile,BufRead *.tpl        setlocal filetype=php
-    autocmd BufNewFile,BufRead *.html       setlocal filetype=php
-augroup END
-
-
+"----------------------------------------------------------
+" NeoCompleteとNeoSnippet
+"----------------------------------------------------------
 if neobundle#is_installed('neocomplete.vim')
     " neocompleteを有効にする
     let g:neocomplete#enable_at_startup = 1
