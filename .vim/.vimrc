@@ -25,8 +25,6 @@ NeoBundle 'tomasr/molokai'
 NeoBundle 'itchyny/lightline.vim'
 " インデントの可視化
 NeoBundle 'Yggdroot/indentLine'
-" JSON用のプラグイン. indentLineプラグインの影響でダブルクォーテーションが非表示になっていた問題を解決する
-NeoBundle 'elzr/vim-json'
 " 末尾の全角半角空白文字を赤くハイライト
 NeoBundle 'bronson/vim-trailing-whitespace'
 
@@ -35,6 +33,8 @@ NeoBundle 'bronson/vim-trailing-whitespace'
 NeoBundleLazy 'moll/vim-node',      {'autoload':{'filetypes':['javascript']}}
 " Javascript用. ES6含めたJavascriptの構文をハイライトする
 NeoBundleLazy 'othree/yajs.vim',    {'autoload':{'filetypes':['javascript']}}
+" JSON用. indentLineプラグインの影響でダブルクォーテーションが非表示になっていた問題を解決する
+NeoBundleLazy 'elzr/vim-json',      {'autoload':{'filetypes':['json']}}
 
 " vimのlua機能が使える時だけ以下のプラグインをインストールする. 「vim --version | grep lua」で有効化されてるか確認
 if has('lua')
