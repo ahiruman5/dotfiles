@@ -25,6 +25,8 @@ NeoBundle 'tomasr/molokai'
 NeoBundle 'itchyny/lightline.vim'
 " インデントの可視化
 NeoBundle 'Yggdroot/indentLine'
+" JSON用のプラグイン. indentLineプラグインの影響でダブルクォーテーションが非表示になっていた問題を解決する
+NeoBundle 'elzr/vim-json'
 " 末尾の全角半角空白文字を赤くハイライト
 NeoBundle 'bronson/vim-trailing-whitespace'
 
@@ -75,6 +77,8 @@ set fileformats=unix,dos,mac " 改行コードの自動判別
 " iTerm2を使ってる場合は設定から「Treat ambiguous-width characters as double width」にチェックする必要がある
 set ambiwidth=double
 
+let g:vim_json_syntax_conceal = 0 " JSON用. indentLineプラグインの影響でダブルクォーテーションが非表示になっていた問題を解決する
+
 "----------------------------------------------------------
 " ステータスライン
 "----------------------------------------------------------
@@ -98,6 +102,7 @@ set autoindent " 新しい行のインデントを自動実行
 set smartindent " 高度な自動インデント
 set shiftwidth=4 " インデントの自動実行するスペース数
 set expandtab " タブをスペースに変換する
+
 " Javascript用. インデントを2にする
 autocmd! FileType javascript    set shiftwidth=2 tabstop=2 softtabstop=2
 autocmd! FileType json          set shiftwidth=2 tabstop=2 softtabstop=2
