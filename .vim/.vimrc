@@ -1,4 +1,4 @@
-set nocompatible               " vi互換のVimとして動作. これが無いとプラグインが動作しなくなったりするが、最近はなくてもいいらしい
+set nocompatible " vi互換のVimとして動作. これが無いとプラグインが動作しなくなったりするが、最近はなくてもいいらしい
 
 "----------------------------------------------------------
 " Neobundle
@@ -16,7 +16,7 @@ endif
 
 call neobundle#begin(expand('~/.vim/bundle/'))
 
-" インストールするプラグインをここに記述
+" インストールするプラグインを以下に記載
 " Neobundle自身を管理
 NeoBundleFetch 'Shougo/neobundle.vim'
 " カラースキーマmolokai
@@ -28,7 +28,13 @@ NeoBundle 'Yggdroot/indentLine'
 " 末尾の全角半角空白文字を赤くハイライト
 NeoBundle 'bronson/vim-trailing-whitespace'
 
-" lua付きvimの時だけ以下のプラグインをインストールする. 「vim --version | grep lua」で確認
+" 遅延ロードするプラグインを以下に記載
+" Node.js用. 「gf」でrequireしたモジュールにジャンプ
+NeoBundleLazy 'moll/vim-node',      {'autoload':{'filetypes':['javascript']}}
+" Javascript用. ES6含めたJavascriptの構文をハイライトする
+NeoBundleLazy 'othree/yajs.vim',    {'autoload':{'filetypes':['javascript']}}
+
+" vimのlua機能が使える時だけ以下のプラグインをインストールする. 「vim --version | grep lua」で有効化されてるか確認
 if has('lua')
     " コードの自動補完
     NeoBundle 'Shougo/neocomplete.vim'
@@ -92,6 +98,9 @@ set autoindent " 新しい行のインデントを自動実行
 set smartindent " 高度な自動インデント
 set shiftwidth=4 " インデントの自動実行するスペース数
 set expandtab " タブをスペースに変換する
+" Javascript用. インデントを2にする
+autocmd! FileType javascript    set shiftwidth=2 tabstop=2 softtabstop=2
+autocmd! FileType json          set shiftwidth=2 tabstop=2 softtabstop=2
 
 "----------------------------------------------------------
 " 文字列検索
@@ -170,9 +179,9 @@ if neobundle#is_installed('neocomplete.vim')
     " 1文字目の入力から補完のポップアップを表示
     let g:neocomplete#auto_completion_start_length = 1
     " バックスペースで補完のポップアップを閉じる
-    inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+    inoremap <expr><BS> neocomplete#smart_close_popup()."<C-h>"
     " エンターキーで補完候補の確定. スニペットの展開もエンターキーで確定
-    imap <expr><CR> neosnippet#expandable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-y>" : "<CR>"
+    imap <expr><CR> neosnippet#expandable() ? "<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "<C-y>" : "<CR>"
     " タブキーで補完候補の選択. スニペット内のジャンプもタブキーでジャンプ
-    imap <expr><TAB> pumvisible() ? "\<C-n>" : neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+    imap <expr><TAB> pumvisible() ? "<C-n>" : neosnippet#jumpable() ? "<Plug>(neosnippet_expand_or_jump)" : "<TAB>"
 endif
