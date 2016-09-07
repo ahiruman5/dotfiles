@@ -27,6 +27,10 @@ NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'Yggdroot/indentLine'
 " 末尾の全角半角空白文字を赤くハイライト
 NeoBundle 'bronson/vim-trailing-whitespace'
+" 構文チェック用のプラグイン
+NeoBundle 'scrooloose/syntastic'
+" プロジェクトに入ってるESLintを読み込む
+NeoBundle 'pmsorhaindo/syntastic-local-eslint.vim'
 
 " 遅延ロードするプラグインを以下に記載
 " Node.js用. 「gf」でrequireしたモジュールにジャンプ
@@ -90,7 +94,7 @@ set ruler " ステータスラインの右側にカーソルの位置を表示�
 "----------------------------------------------------------
 " コマンドモード
 "----------------------------------------------------------
-set wildmode=list:full " コマンドモードの補完
+set wildmenu " コマンドモードの補完
 set history=5000 " 保存する履歴の数
 
 "----------------------------------------------------------
@@ -190,3 +194,23 @@ if neobundle#is_installed('neocomplete.vim')
     " タブキーで補完候補の選択. スニペット内のジャンプもタブキーでジャンプ
     imap <expr><TAB> pumvisible() ? "<C-n>" : neosnippet#jumpable() ? "<Plug>(neosnippet_expand_or_jump)" : "<TAB>"
 endif
+"----------------------------------------------------------
+" Syntastic
+"----------------------------------------------------------
+" 構文エラー行に「>>」を表示
+let g:syntastic_enable_signs = 1
+" 他のプラグインと競合するのを防ぐ
+let g:syntastic_always_populate_loc_list = 1
+" 構文エラーリストを非表示
+let g:syntastic_auto_loc_list = 0
+" ファイルを開いた時に構文チェックを実行する
+let g:syntastic_check_on_open = 1
+" :wq で終了する時も構文チェックする
+let g:syntastic_check_on_wq = 1
+
+" Javascript用. 構文チェックにESLintを使用
+let g:syntastic_javascript_checkers=['eslint']
+" Javascript以外は構文チェックをしない
+let g:syntastic_mode_map = { 'mode': 'passive',
+                           \ 'active_filetypes': ['javascript'],
+                           \ 'passive_filetypes': [] }
