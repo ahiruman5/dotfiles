@@ -31,10 +31,10 @@ NeoBundle 'bronson/vim-trailing-whitespace'
 NeoBundle 'scrooloose/syntastic'
 " プロジェクトに入ってるESLintを読み込む
 NeoBundle 'pmsorhaindo/syntastic-local-eslint.vim'
+" Node.js用. 「gf」でrequireしたモジュールにジャンプ
+NeoBundle 'moll/vim-node'
 
 " 遅延ロードするプラグインを以下に記載
-" Node.js用. 「gf」でrequireしたモジュールにジャンプ
-NeoBundleLazy 'moll/vim-node',      {'autoload':{'filetypes':['javascript']}}
 " Javascript用. ES6含めたJavascriptの構文をハイライトする
 NeoBundleLazy 'othree/yajs.vim',    {'autoload':{'filetypes':['javascript']}}
 " JSON用. indentLineプラグインの影響でダブルクォーテーションが非表示になっていた問題を解決する
@@ -194,6 +194,7 @@ if neobundle#is_installed('neocomplete.vim')
     " タブキーで補完候補の選択. スニペット内のジャンプもタブキーでジャンプ
     imap <expr><TAB> pumvisible() ? "<C-n>" : neosnippet#jumpable() ? "<Plug>(neosnippet_expand_or_jump)" : "<TAB>"
 endif
+
 "----------------------------------------------------------
 " Syntastic
 "----------------------------------------------------------
