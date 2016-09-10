@@ -29,14 +29,22 @@ NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'bronson/vim-trailing-whitespace'
 " 構文チェック用のプラグイン
 NeoBundle 'scrooloose/syntastic'
-" プロジェクトに入ってるESLintを読み込む
+" ファイルのあいまい検索
+NeoBundle 'ctrlpvim/ctrlp.vim'
+" CtrlPの拡張プラグイン. ファイル内関数のあいまい検索
+NeoBundle 'tacahiroy/ctrlp-funky'
+" CtrlPの拡張プラグイン. コマンドのあいまい検索
+NeoBundle 'suy/vim-ctrlp-commandline'
+" HTML5用. HTML5の構文をハイライトする
+NeoBundle 'othree/html5.vim'
+" Javascript用. ES6含めたJavascriptの構文をハイライトする
+NeoBundle 'othree/yajs.vim'
+" Node.js用. プロジェクトに入ってるESLintを読み込む
 NeoBundle 'pmsorhaindo/syntastic-local-eslint.vim'
 " Node.js用. 「gf」でrequireしたモジュールにジャンプ
 NeoBundle 'moll/vim-node'
 
 " 遅延ロードするプラグインを以下に記載
-" Javascript用. ES6含めたJavascriptの構文をハイライトする
-NeoBundleLazy 'othree/yajs.vim',    {'autoload':{'filetypes':['javascript']}}
 " JSON用. indentLineプラグインの影響でダブルクォーテーションが非表示になっていた問題を解決する
 NeoBundleLazy 'elzr/vim-json',      {'autoload':{'filetypes':['json']}}
 
@@ -215,3 +223,18 @@ let g:syntastic_javascript_checkers=['eslint']
 let g:syntastic_mode_map = { 'mode': 'passive',
                            \ 'active_filetypes': ['javascript'],
                            \ 'passive_filetypes': [] }
+
+"----------------------------------------------------------
+" CtrlP
+"----------------------------------------------------------
+let g:ctrlp_match_window = 'order:ttb,min:20,max:20,results:100' " マッチウインドウの設定. 「下部に表示, 大きさ20行で固定, 検索結果100件」
+let g:ctrlp_show_hidden = 1 " .(ドット)から始まるファイルも検索対象にする
+let g:ctrlp_types = ['fil'] "ファイル検索のみ行う
+let g:ctrlp_extensions = ['funky', 'commandline'] " CtrlPの拡張として「funky」と「commandline」を使う
+let g:ctrlp_prompt_mappings = { 'AcceptSelection("h")': ['<CR>'] } " マッチした検索結果をエンターキーで上部に展開
+
+" CtrlPCommandLineの有効化
+command! CtrlPCommandLine call ctrlp#init(ctrlp#commandline#id())
+
+" CtrlPFunkyの絞り込み検索設定
+let g:ctrlp_funky_matchtype = 'path'
