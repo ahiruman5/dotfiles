@@ -10,6 +10,7 @@ ln -sf ${CURRENT}/.vim/.vimrc ~
 ln -sf ${CURRENT}/.git-prompt.sh ~
 ln -sf ${CURRENT}/.gitconfig ~
 ln -sf ${CURRENT}/.git-completion.bash ~
+ln -sf ${CURRENT}/.agignore ~
 
 if [ ! -d ~/.zsh/ ]
 then

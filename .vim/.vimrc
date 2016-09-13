@@ -35,6 +35,8 @@ NeoBundle 'ctrlpvim/ctrlp.vim'
 NeoBundle 'tacahiroy/ctrlp-funky'
 " CtrlPの拡張プラグイン. コマンドのあいまい検索
 NeoBundle 'suy/vim-ctrlp-commandline'
+" CtrlPの検索にagを使う
+NeoBundle 'rking/ag.vim'
 " HTML5用. HTML5の構文をハイライトする
 NeoBundle 'othree/html5.vim'
 " Javascript用. ES6含めたJavascriptの構文をハイライトする
@@ -104,6 +106,9 @@ set ruler " ステータスラインの右側にカーソルの位置を表示�
 "----------------------------------------------------------
 set wildmenu " コマンドモードの補完
 set history=5000 " 保存する履歴の数
+
+" 「gf」でジャンプしたファイルを水平展開
+autocmd! User Node  nmap <buffer> gf <Plug>NodeSplitGotoFile
 
 "----------------------------------------------------------
 " タブ・インデント
@@ -231,10 +236,16 @@ let g:ctrlp_match_window = 'order:ttb,min:20,max:20,results:100' " マッチウ�
 let g:ctrlp_show_hidden = 1 " .(ドット)から始まるファイルも検索対象にする
 let g:ctrlp_types = ['fil'] "ファイル検索のみ行う
 let g:ctrlp_extensions = ['funky', 'commandline'] " CtrlPの拡張として「funky」と「commandline」を使う
-let g:ctrlp_prompt_mappings = { 'AcceptSelection("h")': ['<CR>'] } " マッチした検索結果をエンターキーで上部に展開
+let g:ctrlp_prompt_mappings = { 'AcceptSelection("h")': ['<CR>'] } " マッチした検索結果をエンターキーで水平展開
 
 " CtrlPCommandLineの有効化
 command! CtrlPCommandLine call ctrlp#init(ctrlp#commandline#id())
 
 " CtrlPFunkyの絞り込み検索設定
 let g:ctrlp_funky_matchtype = 'path'
+
+if executable('ag')
+  let g:ctrlp_use_caching=0 " CtrlPのキャッシュを使わない
+  " let g:ctrlp_user_command='ag %s -i --nocolor --nogroup -g ""' "
+  let g:ctrlp_user_command='ag %s -i --hidden -g ""' " 「ag」の検索設定
+endif
