@@ -19,27 +19,28 @@ fi
 ln -sf ${CURRENT}/.zsh/.zshenv ~/.zsh/
 ln -sf ${CURRENT}/.zsh/.zshrc ~/.zsh/
 
-if [ ! -d ~/.zsh/bin/ ]
+if [ ! -d ~/.peco/ ]
 then
-    mkdir ~/.zsh/bin/
+    mkdir ~/.peco/
 fi
-
-#MacとLinuxでそれぞれ別のpecoを利用
-case ${OSTYPE} in
-    darwin*)
-        #Mac用の設定
-        ln -sf ${CURRENT}/.zsh/bin/peco/mac/peco ~/.zsh/bin/
-        ;;
-    linux*)
-        #Linux用の設定
-        ln -sf ${CURRENT}/.zsh/bin/peco/linux/peco ~/.zsh/bin/
-        ;;
-esac
-
+ln -sf ${CURRENT}/.peco/config.json ~/.peco/
 
 if [ ! -d ~/bin/ ]
 then
     mkdir ~/bin/
 fi
+
 ln -sf ${CURRENT}/bin/git_diff_wrapper ~/bin/
+
+#MacとLinuxでそれぞれ別のpecoを利用
+case ${OSTYPE} in
+    darwin*)
+        #Mac用の設定
+        ln -sf ${CURRENT}/bin/mac/peco ~/bin/
+        ;;
+    linux*)
+        #Linux用の設定
+        ln -sf ${CURRENT}/bin/linux/peco ~/bin/
+        ;;
+esac
 ln -sf ${CURRENT}/.dir_colors ~
