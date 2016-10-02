@@ -11,6 +11,7 @@ ln -sf ${CURRENT}/.git-prompt.sh ~
 ln -sf ${CURRENT}/.gitconfig ~
 ln -sf ${CURRENT}/.git-completion.bash ~
 ln -sf ${CURRENT}/.agignore ~
+ln -sf ${CURRENT}/.dir_colors ~
 
 if [ ! -d ~/.zsh/ ]
 then
@@ -31,7 +32,6 @@ then
 fi
 
 ln -sf ${CURRENT}/bin/git_diff_wrapper ~/bin/
-ln -sf ${CURRENT}/.dir_colors ~
 
 #MacとLinuxでそれぞれ別のコマンドを利用
 case ${OSTYPE} in
