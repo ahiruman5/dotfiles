@@ -31,8 +31,9 @@ then
 fi
 
 ln -sf ${CURRENT}/bin/git_diff_wrapper ~/bin/
+ln -sf ${CURRENT}/.dir_colors ~
 
-#MacとLinuxでそれぞれ別のpecoを利用
+#MacとLinuxでそれぞれ別のコマンドを利用
 case ${OSTYPE} in
     darwin*)
         #Mac用の設定
@@ -41,6 +42,6 @@ case ${OSTYPE} in
     linux*)
         #Linux用の設定
         ln -sf ${CURRENT}/bin/linux/peco ~/bin/
+        ln -sf ${CURRENT}/bin/linux/jq ~/bin/
         ;;
 esac
-ln -sf ${CURRENT}/.dir_colors ~

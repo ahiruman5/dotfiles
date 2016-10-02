@@ -8,11 +8,6 @@ then
     path=(~/.nodebrew/current/bin(N-/) $path)
 fi
 
-#peco導入
-if [ -d ~/.zsh/bin ]
-then
-    path=($HOME/.zsh/bin(N-/) $path)
-fi
 #パスの重複を除外
 typeset -U path cdpath fpath manpath
 
