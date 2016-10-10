@@ -20,7 +20,7 @@ endif
 
 call neobundle#begin(expand('~/.vim/bundle/'))
 
-" インストールするプラグインを以下に記載
+" インストールするVimプラグインを以下に記述
 " NeoBundle自身を管理
 NeoBundleFetch 'Shougo/neobundle.vim'
 " カラースキームmolokai
@@ -52,11 +52,11 @@ NeoBundle 'pmsorhaindo/syntastic-local-eslint.vim'
 " Node.js用. 「gf」でrequireしたモジュールにジャンプ
 NeoBundle 'moll/vim-node'
 
-" 遅延ロードするプラグインを以下に記載
+" 遅延ロードするVimプラグインを以下に記述
 " JSON用. indentLineプラグインの影響でダブルクォーテーションが非表示になっていた問題を解決する
 NeoBundleLazy 'elzr/vim-json',      {'autoload':{'filetypes':['json']}}
 
-" vimのlua機能が使える時だけ以下のプラグインをインストールする. 「vim --version | grep lua」で有効化されてるか確認
+" vimのlua機能が使える時だけ以下のVimプラグインをインストールする
 if has('lua')
     " コードの自動補完
     NeoBundle 'Shougo/neocomplete.vim'
@@ -68,10 +68,10 @@ endif
 
 call neobundle#end()
 
-" ファイルタイプ別のプラグイン/インデントを有効にする
+" ファイルタイプ別のVimプラグイン/インデントを有効にする
 filetype plugin indent on
 
-" 未インストールのプラグインがある場合、インストールするかどうかを尋ねてくれるようにする設定
+" 未インストールのVimプラグインがある場合、インストールするかどうかを尋ねてくれるようにする設定
 NeoBundleCheck
 
 "----------------------------------------------------------
@@ -92,7 +92,6 @@ set fileencodings=ucs-boms,utf-8,euc-jp,cp932 " 読み込み時の文字コー�
 set fileformats=unix,dos,mac " 改行コードの自動判別. 左側が優先される
 
 " □や○文字が崩れる問題を解決
-" iTerm2を使ってる場合は設定から「Treat ambiguous-width characters as double width」にチェックする必要がある
 set ambiwidth=double
 
 let g:vim_json_syntax_conceal = 0 " JSON用. indentLineプラグインの影響でダブルクォーテーションが非表示になっていた問題を解決する
@@ -219,13 +218,13 @@ endif
 "----------------------------------------------------------
 " 構文エラー行に「>>」を表示
 let g:syntastic_enable_signs = 1
-" 他のプラグインと競合するのを防ぐ
+" 他のVimプラグインと競合するのを防ぐ
 let g:syntastic_always_populate_loc_list = 1
 " 構文エラーリストを非表示
 let g:syntastic_auto_loc_list = 0
 " ファイルを開いた時に構文エラーチェックを実行する
 let g:syntastic_check_on_open = 1
-" :wq で終了する時も構文エラーチェックする
+" 「:wq」で終了する時も構文エラーチェックする
 let g:syntastic_check_on_wq = 1
 
 " Javascript用. 構文エラーチェックにESLintを使用
