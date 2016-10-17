@@ -1,7 +1,7 @@
 set encoding=utf-8
 scriptencoding utf-8
-" ↑1行目は読み込み時の文字コード
-" ↑2行目はVim Script内でマルチバイトを使う場合に設定する
+" ↑1行目は読み込み時の文字コードの設定
+" ↑2行目はVim script内でマルチバイトを使う場合の設定
 " Vim Scritptにvimrcも含まれるので、日本語でコメントを書く場合は先頭にこの設定が必要になる
 
 "----------------------------------------------------------
@@ -25,8 +25,10 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 " カラースキームmolokai
 NeoBundle 'ahiruman5/molokai'
-" Gitプラグイン
+" Gitを操作するプラグイン
 NeoBundle 'tpope/vim-fugitive'
+" GitのDiffを左恥に表示
+NeoBundle 'airblade/vim-gitgutter'
 " ステータスラインの表示内容強化
 NeoBundle 'itchyny/lightline.vim'
 " インデントの可視化
@@ -102,7 +104,7 @@ let g:vim_json_syntax_conceal = 0 " JSON用. indentLineプラグインの影響�
 set laststatus=2 " ステータスラインを常に表示
 set showmode " 現在のモードを表示
 set showcmd " 打ったコマンドをステータスラインの下に表示
-set ruler " ステータスラインの右側にカーソルの位置を表示する
+set ruler " ステータスラインの右側にカーソルの現在位置を表示する
 
 "----------------------------------------------------------
 " コマンドモード
@@ -136,7 +138,7 @@ set smartcase " 検索パターンに大文字を含んでいたら大文字小�
 set hlsearch " 検索結果をハイライト
 
 " ESCキー2度押しでハイライトの切り替え
-nnoremap <Esc><Esc> :<C-u>set nohlsearch!<CR>
+nnoremap <silent><Esc><Esc> :<C-u>set nohlsearch!<CR>
 
 "----------------------------------------------------------
 " カーソル
@@ -253,3 +255,8 @@ if executable('ag')
   let g:ctrlp_use_caching=0 " CtrlPのキャッシュを使わない
   let g:ctrlp_user_command='ag %s -i --hidden -g ""' " 「ag」の検索設定
 endif
+
+"----------------------------------------------------------
+" vim-fugitive
+"----------------------------------------------------------
+set diffopt+=vertical " :Gdiffコマンド実行時の分割を垂直分割にする
