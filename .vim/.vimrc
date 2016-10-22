@@ -35,6 +35,8 @@ NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'Yggdroot/indentLine'
 " 末尾の全角半角空白文字を赤くハイライト
 NeoBundle 'bronson/vim-trailing-whitespace'
+" コメントのオンオフを行う
+NeoBundle 'scrooloose/nerdcommenter'
 " 構文エラーチェック
 NeoBundle 'scrooloose/syntastic'
 " 多機能セレクタ
@@ -260,3 +262,12 @@ endif
 " vim-fugitive
 "----------------------------------------------------------
 set diffopt+=vertical " :Gdiffコマンド実行時の分割を垂直分割にする
+
+"----------------------------------------------------------
+" NERDCommenter
+"----------------------------------------------------------
+let NERDSpaceDelims = 1 " コメントアウト時に半角空白を1文字挿入
+
+" 「,,」でコメントのオンオフ切り替え
+nmap ,, <Plug>NERDCommenterToggle
+vmap ,, <Plug>NERDCommenterToggle
