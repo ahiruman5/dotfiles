@@ -114,6 +114,10 @@ set ruler " ステータスラインの右側にカーソルの現在位置を�
 set wildmenu " コマンドモードの補完
 set history=5000 " 保存するコマンド履歴の数
 
+" ESCキーのマッピング
+noremap <C-j> <Esc>
+noremap! <C-j> <Esc>
+
 " vim-nodeプラグイン用. 「gf」でジャンプしたファイルを水平展開
 autocmd! User Node  nmap <buffer> gf <Plug>NodeSplitGotoFile
 
@@ -232,7 +236,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
 
 " Javascript用. 構文エラーチェックにESLintを使用
-let g:syntastic_javascript_checkers=['eslint']
+let g:syntastic_javascript_checkers = ['eslint']
 " Javascript以外は構文エラーチェックをしない
 let g:syntastic_mode_map = { 'mode': 'passive',
                            \ 'active_filetypes': ['javascript'],
@@ -254,8 +258,8 @@ command! CtrlPCommandLine call ctrlp#init(ctrlp#commandline#id())
 let g:ctrlp_funky_matchtype = 'path'
 
 if executable('ag')
-  let g:ctrlp_use_caching=0 " CtrlPのキャッシュを使わない
-  let g:ctrlp_user_command='ag %s -i --hidden -g ""' " 「ag」の検索設定
+  let g:ctrlp_use_caching = 0 " CtrlPのキャッシュを使わない
+  let g:ctrlp_user_command = 'ag %s -i --hidden -g ""' " 「ag」の検索設定
 endif
 
 "----------------------------------------------------------
