@@ -8,6 +8,13 @@ then
     path=(~/.nodebrew/current/bin(N-/) $path)
 fi
 
+#pyenvを使う場合はPATHを設定する
+if [ -d $HOME/.pyenv ]
+then
+    path=(~/.pyenv//bin(N-/) $path)
+    eval "$(pyenv init -)"
+fi
+
 #パスの重複を除外
 typeset -U path cdpath fpath manpath
 
