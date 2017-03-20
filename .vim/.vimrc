@@ -55,6 +55,14 @@ NeoBundle 'othree/yajs.vim'
 NeoBundle 'pmsorhaindo/syntastic-local-eslint.vim'
 " Node.js用. 「gf」でrequireしたモジュールにジャンプ
 NeoBundle 'moll/vim-node'
+" Markdown編集用プラグイン
+NeoBundle 'plasticboy/vim-markdown'
+" 文章整形用プラグイン. 主にMarkdownのテーブル用
+NeoBundle 'h1mesuke/vim-alignta'
+" Markdownのプレビュー用プラグイン
+NeoBundle 'kannokanno/previm'
+" ブラウザ起動
+NeoBundle 'tyru/open-browser.vim'
 
 " 遅延ロードするVimプラグインを以下に記述
 " JSON用. indentLineプラグインの影響でダブルクォーテーションが非表示になっていた問題を解決する
@@ -99,6 +107,13 @@ set fileformats=unix,dos,mac " 改行コードの自動判別. 左側が優先�
 set ambiwidth=double
 
 let g:vim_json_syntax_conceal = 0 " JSON用. indentLineプラグインの影響でダブルクォーテーションが非表示になっていた問題を解決する
+
+"----------------------------------------------------------
+" Markdown
+"----------------------------------------------------------
+au BufRead,BufNewFile *.md set filetype=markdown
+let g:vim_markdown_folding_disabled = 1 " 自動折り畳みをオフ
+let g:vim_markdown_new_list_item_indent = 2 " インデントを2にする
 
 "----------------------------------------------------------
 " ステータスライン
