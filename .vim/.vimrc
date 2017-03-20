@@ -135,6 +135,9 @@ set shiftwidth=4 " smartindentで増減する幅
 autocmd! FileType javascript    set shiftwidth=2 tabstop=2 softtabstop=2
 autocmd! FileType json          set shiftwidth=2 tabstop=2 softtabstop=2
 
+" Javascript用. メソッドチェーンで改行した場合のインデントを無効
+let g:javascript_opfirst = 1
+
 "----------------------------------------------------------
 " 文字列検索
 "----------------------------------------------------------
