@@ -1,4 +1,5 @@
 export LANG=ja_JP.UTF-8
+export EDITOR="$(which vim)"
 path=($HOME/bin $path)
 
 #nodebrewを使う場合はPATHを設定する
