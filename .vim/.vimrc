@@ -31,6 +31,8 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'airblade/vim-gitgutter'
 " ステータスラインの表示内容強化
 NeoBundle 'itchyny/lightline.vim'
+" 検索ヒット数を表示
+NeoBundle "osyo-manga/vim-anzu"
 " インデントの可視化
 NeoBundle 'Yggdroot/indentLine'
 " 末尾の全角半角空白文字を赤くハイライト
@@ -175,7 +177,7 @@ nnoremap <silent><Esc><Esc> :<C-u>set nohlsearch!<CR>
 "----------------------------------------------------------
 set whichwrap=b,s,h,l,<,>,[,],~ " カーソルの左右移動で行末から次の行の行頭への移動が可能になる
 set number " 行番号を表示
-set cursorline " カーソルラインをハイライト
+" set cursorline " カーソルラインをハイライト
 
 " 行が折り返し表示されていた場合、行単位ではなく表示行単位でカーソルを移動する
 nnoremap j gj
@@ -304,3 +306,11 @@ let NERDSpaceDelims = 1 " コメントアウト時に半角空白を1文字挿�
 " 「,,」でコメントのオンオフ切り替え
 nmap ,, <Plug>NERDCommenterToggle
 vmap ,, <Plug>NERDCommenterToggle
+
+"----------------------------------------------------------
+" NERDCommenter
+"----------------------------------------------------------
+nmap n <Plug>(anzu-n-with-echo)
+nmap N <Plug>(anzu-N-with-echo)
+nmap * <Plug>(anzu-star-with-echo)
+nmap # <Plug>(anzu-sharp-with-echo)
