@@ -6,9 +6,7 @@ CURRENT=$(cd $(dirname $0) && pwd)
 #setup.shと同じ階層のファイルをホームディレクトリに向けてシンボリックリンクを貼る
 ln -sf ${CURRENT}/.bash/.bash_profile ~
 ln -sf ${CURRENT}/.vim/.vimrc ~
-ln -sf ${CURRENT}/.git-prompt.sh ~
 ln -sf ${CURRENT}/.gitconfig ~
-ln -sf ${CURRENT}/.git-completion.bash ~
 ln -sf ${CURRENT}/.agignore ~
 ln -sf ${CURRENT}/.dir_colors ~
 
