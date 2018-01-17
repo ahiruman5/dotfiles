@@ -1,12 +1,12 @@
 #----------------------------------------------------------
 # zplug
 #----------------------------------------------------------
-
 # zplugが未インストールであればインストールする
 if [ ! -d ~/.zplug ]; then
     curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh| zsh
 fi
 
+# init.zsh読み込み
 source ~/.zplug/init.zsh
 
 # インストールするZshプラグインを以下に記述
@@ -39,176 +39,153 @@ fi
 zplug load --verbose
 
 #----------------------------------------------------------
-# anyframe
+# 基本設定
 #----------------------------------------------------------
-# コマンド履歴から検索・実行する
-bindkey '^r' anyframe-widget-put-history
+# ディレクトリ名でcd
+setopt auto_cd
+# cd時に自動でディレクトリスタックに追加する
+setopt auto_pushd
+# ディレクトリスタックと重複したディレクトリをスタックに追加しない
+setopt pushd_ignore_dups
+# ディレクトリの補完時は末尾に/を表示
+setopt no_auto_remove_slash
+# 補完候補の表示順を水平方向にする
+setopt list_rows_first
+# 数値でソート
+setopt numeric_glob_sort
+# 隠しファイルも補完
+setopt glob_dots
+# スペルミスの修正候補を提示
+setopt correct
+# ファイル名のスペルミスの修正候補を提示
+setopt correct_all
+# historyコマンドをコマンド履歴に記録しない
+setopt hist_no_store
+# コマンド履歴に実行時間も記録する
+setopt extended_history
+# コマンド中の余分なスペースは削除して履歴に記録する
+setopt hist_reduce_blanks
+# 履歴をすぐに追加する(通常はシェル終了時)
+setopt inc_append_history
+# Zsh間で履歴を共有する
+setopt share_history
+# 「rm *」で確認を求める機能を無効化する
+setopt rm_star_silent
+# Ctrl+Dによるログアウトを無効化する
+setopt ignore_eof
+# コマンドのフロー制御を無効にする
+setopt no_flow_control
+# ビープ音を無効化する
+setopt no_beep
 
 #----------------------------------------------------------
-# pure
+# 環境変数
 #----------------------------------------------------------
-# プロンプトの表示を変更
-PURE_PROMPT_SYMBOL='❯❯❯'
-
+# 言語設定
 export LANG=ja_JP.UTF-8
-export EDITOR="$(which vim)"
+# エディター設定
+export EDITOR=vim
+# スペルミス時に無視するパターン
+export CORRECT_IGNORE='_*'
+# ファイル名のスペルミス時に無視するパターン
+export CORRECT_IGNORE_FILE='.*'
+
+#----------------------------------------------------------
+# PATH
+#----------------------------------------------------------
+# dotfilesで管理してるbinディレクトリにPATHを通す
 path=($HOME/bin $path)
 
-#nodebrewを使う場合はPATHを設定する
+#nodebrewを使う場合はPATHを通す
 if [ -d $HOME/.nodebrew ]
 then
     path=(~/.nodebrew/current/bin(N-/) $path)
 fi
 
-#pyenvを使う場合はPATHを設定する
+#pyenvを使う場合はPATHを通す
 if [ -d $HOME/.pyenv ]
 then
     path=(~/.pyenv/bin(N-/) $path)
     eval "$(pyenv init -)"
 fi
 
+#cargoを使う場合はPATHを通す
+if [ -d $HOME/.cargo ]
+then
+    path=(~/.cargo/bin(N-/) $path)
+fi
+
 #パスの重複を除外
 typeset -U path cdpath fpath manpath
 
-#compinit関数のロード
-autoload -Uz compinit
-compinit
-
-#補完候補をハイライトする
-zstyle ':completion:*:default' menu select=2
-
-#大文字、小文字を区別せず補完する
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-
-
-setopt prompt_subst
-setopt auto_pushd
-setopt correct
-
-HISTFILE=~/.zsh_history
-SAVEHIST=100000
-HISTSIZE=100000
-
-
-
-##history関連
-#historyコマンドをhistoryに追加しない
-setopt hist_no_store
-
-#コマンドの実行した時の時間と処理にかかった時間をhistoryに追加する
-#setopt extended_history
-
-#余分なスペースを削除してからhistoryに追加する
-setopt hist_reduce_blanks
-
-#コマンドの実行時間を記録
-setopt extended_history
-
-#通常はシェルが終了してからhistoryに書き込まれるが
-#このオプションを有効にすることで即書き込んでくれる
-setopt inc_append_history
-
-#他のシェルでhistoryに書き込まれたものをリアルタイムで参照が出来る
-setopt share_history
-
-
-##グロブ関連
-#マッチングした時に文字列じゃなくて数値としてソートするようにする
-setopt numeric_glob_sort
-
-#rmコマンドの確認メッセージを無くす
-setopt rm_star_silent
-
-#デフォルトパーミッションの設定
-#新規ファイルは644、新規ディレクトリは755
-umask 022
-
+#----------------------------------------------------------
+# alias
+#----------------------------------------------------------
+# exaを実行しモダンな感じのlsを表示(変更時刻順でソート)
+alias ll='exa -aghlF -s=modified --git'
+# exaを実行しモダンな感じのtreeを表示(size順でソート)
+alias tree='exa -aghlrFT -s=size --git'
+# ag検索時に隠しファイルも対象にする
+alias ag='ag --hidden'
+# コマンド履歴の実行時刻と実行時間を表示. 表示件数は全件.
 alias history='history -Di 1'
-
-#キーバインドをemacsモードに設定
-bindkey -e
-
-#プロンプトの色表示を可能にする
-autoload -U colors
-colors
-
-#grepに色を付ける
+# grepで検索した文字列をハイライト
 alias grep='grep --color=auto'
 
-#startColor='\e[0;'
-#endColor='\e[m'
-#
-#insertColor='38;5;123m'
-#
-#PS1="%{'\e[0;38;5;123mテスト\e[m'%}"
+#----------------------------------------------------------
+# PROMPT
+#----------------------------------------------------------
+# カラー設定
+local fg_red=$'%{\e[38;5;1m%}%}'
+local fg_green=$'%{\e[38;5;2m%}%}'
+local fg_yellow=$'%{\e[38;5;3m%}%}'
+local fg_blue=$'%{\e[38;5;4m%}%}'
 
-local fg_red=$'%{\e[38;5;203m%}%}'
-local fg_green=$'%{\e[38;5;118m%}%}'
-local fg_blue=$'%{\e[38;5;051m%}%}'
+# 通常のプロンプト
+PURE_PROMPT_SYMBOL='❯❯❯'
 
-PROMPT2="%_> "
+# スペル訂正時のプロンプト
+SPROMPT="( ',_>') { "${fg_yellow}"%R${reset_color}は"${fg_green}"%B%r%b${reset_color}の間違いかね?
+<(;'A')> { そう!"${fg_blue}"(y)${reset_color}, 違う!"${fg_red}"(n) :${reset_color} "
 
-SPROMPT="( ',_>') { やれやれ、"${fg_green}"%B%r%b%{${reset_color}%}かね?
-<(;'A')> { そう!"${fg_blue}"(y)${reset_color}, 違う!"${fg_red}"(n) :%{${reset_color}%} "
+#----------------------------------------------------------
+# zstyle
+#----------------------------------------------------------
+#補完候補を一覧から選択する
+zstyle ':completion:*:default' menu select=2
+#大文字、小文字を区別せず補完する
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+#補完時のハイライト設定
+zstyle ':completion:*' list-colors ''
 
-
-#ディレクトリスタックに重複するディレクトリを登録しない
-setopt pushd_ignore_dups
-
-#ディレクトリを補完した時は/を付けたままにする
-setopt no_auto_remove_slash
-
-#補完候補を表示順を横にする
-setopt list_rows_first
-
-#ドットから始まるファイル・ディレクトリも補完
-setopt glob_dots
-
-#Ctrl+Dによるログアウトを無効にする
-setopt ignore_eof
-
-#コマンドのフロー制御を無効にする
-setopt no_flow_control
-
-#ビープを鳴らさない
-setopt no_beep
-
-#cd付けずにパス名を入力するだけで移動できる
-setopt auto_cd
-
-#emacs風キーバインド
+#----------------------------------------------------------
+# キーバインド
+#----------------------------------------------------------
+# キーバインドをemacsモードに設定
 bindkey -e
 
-#前方一致histoory検索
-bindkey "^N" history-beginning-search-forward
-bindkey "^P" history-beginning-search-backward
+# コマンド履歴からインクリメンタル検索
+bindkey '^R' anyframe-widget-put-history
 
-#単語単位のカーソル移動
+# 単語単位のカーソル移動
 bindkey "^H" forward-word
 bindkey "^F" backward-word
 
-#カーソル位置から行頭または行末までの削除
+# カーソル位置から行頭または行末までの削除
 bindkey "^J" backward-kill-word
 
-#誤爆しやすいから無効化する
-bindkey -r "^O"
+#----------------------------------------------------------
+# コマンド履歴
+#----------------------------------------------------------
+# コマンド履歴の保存先
+HISTFILE=~/.zsh_history
+# コマンド履歴に保存される件数
+SAVEHIST=100000
+# メモリにキャッシュするコマンド履歴件数
+HISTSIZE=100000
 
-#OS別の設定
-case ${OSTYPE} in
-    darwin*)
-        #LSのカラー設定
-        #brew install coreutilsでパッケージを入れる必要あり
-        eval $(gdircolors -b $HOME/.dir_colors)
-        #Mac用の設定
-        alias ll='gls -alrtFG --color=auto'
-        ;;
-    linux*)
-        #LSのカラー設定
-        eval $(dircolors -b $HOME/.dir_colors)
-        #Linux用の設定
-        alias ll='ls -alrtF --color=auto'
-        ;;
-esac
-
-#補完時にもLSCOLORを使う
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+#----------------------------------------------------------
+# umask
+#----------------------------------------------------------
+# 新規ファイルは644、新規ディレクトリは755
+umask 022
