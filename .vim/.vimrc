@@ -119,6 +119,7 @@ let g:vim_json_syntax_conceal = 0 " JSON用. indentLineプラグインの影響�
 "----------------------------------------------------------
 if has('mac')
     au BufRead,BufNewFile *.md set filetype=markdown
+    let g:vim_markdown_conceal = 0 " 構文の隠蔽をオフ
     let g:vim_markdown_folding_disabled = 1 " 自動折り畳みをオフ
     let g:vim_markdown_new_list_item_indent = 2 " インデントを2にする
 endif
