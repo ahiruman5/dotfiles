@@ -35,10 +35,12 @@ case ${OSTYPE} in
     darwin*)
         #Mac用の設定
         ln -sf ${CURRENT}/bin/mac/peco ~/bin/
+        ln -sf ${CURRENT}/bin/mac/exa ~/bin/
         ;;
     linux*)
         #Linux用の設定
         ln -sf ${CURRENT}/bin/linux/peco ~/bin/
+        ln -sf ${CURRENT}/bin/linux/exa ~/bin/
         ln -sf ${CURRENT}/bin/linux/jq ~/bin/
         ;;
 esac
