@@ -58,7 +58,7 @@ NeoBundle 'pmsorhaindo/syntastic-local-eslint.vim'
 " Node.js用. 「gf」でrequireしたモジュールにジャンプ
 NeoBundle 'moll/vim-node'
 
-" 遅延ロードするVimプラグインを以下に記述
+" 遅延読み込みするVimプラグインを以下に記述
 " JSON用. indentLineプラグインの影響でダブルクォーテーションが非表示になっていた問題を解決する
 NeoBundleLazy 'elzr/vim-json',      {'autoload':{'filetypes':['json']}}
 
@@ -89,7 +89,7 @@ call neobundle#end()
 " ファイルタイプ別のVimプラグイン/インデントを有効にする
 filetype plugin indent on
 
-" 未インストールのVimプラグインがある場合、インストールするかどうかを尋ねてくれるようにする設定
+" 未インストールのVimプラグインがある場合、インストールするかどうか尋ねる設定
 NeoBundleCheck
 
 "----------------------------------------------------------
