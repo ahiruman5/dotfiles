@@ -1,3 +1,55 @@
+#----------------------------------------------------------
+# zplug
+#----------------------------------------------------------
+
+# zplugが未インストールであればインストールする
+if [ ! -d ~/.zplug ]; then
+    curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh| zsh
+fi
+
+source ~/.zplug/init.zsh
+
+# インストールするZshプラグインを以下に記述
+# zplug自身を管理
+zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+# 履歴からコマンド候補を表示
+zplug 'zsh-users/zsh-autosuggestions'
+# 補完候補を強力にする
+zplug 'zsh-users/zsh-completions'
+# 履歴のインクリメンタル検索
+zplug 'mollifier/anyframe'
+# プロンプトのテーマをpureにする
+zplug 'sindresorhus/pure', use:pure.zsh, from:github, as:theme
+# Zshの非同期処理プラグイン. pureプラグインが非同期でgitのremote情報を取得するのに必要
+zplug 'mafredri/zsh-async', from:github
+
+# 遅延読み込みするZshプラグインを以下に記載
+# コマンドのハイライト
+zplug 'zsh-users/zsh-syntax-highlighting', defer:2
+
+# 未インストールのZshプラグインがある場合、インストールするか尋ねる設定
+if ! zplug check --verbose; then
+    printf 'Install? [y/N]: '
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+
+# Zshプラグインを読み込み、コマンドにパスを通す
+zplug load --verbose
+
+#----------------------------------------------------------
+# anyframe
+#----------------------------------------------------------
+# コマンド履歴から検索・実行する
+bindkey '^r' anyframe-widget-put-history
+
+#----------------------------------------------------------
+# pure
+#----------------------------------------------------------
+# プロンプトの表示を変更
+PURE_PROMPT_SYMBOL='❯❯❯'
+
 export LANG=ja_JP.UTF-8
 export EDITOR="$(which vim)"
 path=($HOME/bin $path)
@@ -5,14 +57,13 @@ path=($HOME/bin $path)
 #nodebrewを使う場合はPATHを設定する
 if [ -d $HOME/.nodebrew ]
 then
-    #(N-/)の意味 => http://qiita.com/mollifier/items/42ae46ff4140251290a7
     path=(~/.nodebrew/current/bin(N-/) $path)
 fi
 
 #pyenvを使う場合はPATHを設定する
 if [ -d $HOME/.pyenv ]
 then
-    path=(~/.pyenv//bin(N-/) $path)
+    path=(~/.pyenv/bin(N-/) $path)
     eval "$(pyenv init -)"
 fi
 
@@ -91,12 +142,9 @@ alias grep='grep --color=auto'
 #
 #PS1="%{'\e[0;38;5;123mテスト\e[m'%}"
 
-source $HOME/.git-prompt.sh
 local fg_red=$'%{\e[38;5;203m%}%}'
 local fg_green=$'%{\e[38;5;118m%}%}'
 local fg_blue=$'%{\e[38;5;051m%}%}'
-local fg_yellow=$'%{\e[38;5;226m%}%}'
-PROMPT=${fg_red}"%n@%m${fg_yellow} %~"${fg_green}'$(__git_ps1 "(%s)")'" %#%{${reset_color}%} "
 
 PROMPT2="%_> "
 
@@ -164,20 +212,3 @@ esac
 
 #補完時にもLSCOLORを使う
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-
-#peco:コマンド履歴を検索
-function peco-select-history() {
-    local tac
-    if which tac > /dev/null; then
-        tac="tac"
-    else
-        tac="tail -r"
-    fi
-    BUFFER=$(\history -n 1 | \
-        eval $tac | \
-        peco --query "$LBUFFER")
-    CURSOR=$#BUFFER
-    zle clear-screen
-}
-zle -N peco-select-history
-bindkey '^r' peco-select-history
