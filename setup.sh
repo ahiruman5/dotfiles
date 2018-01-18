@@ -17,19 +17,16 @@ ln -sf ${CURRENT}/.agignore ~
 ln -sf ${CURRENT}/.dir_colors ~
 ln -sf ${CURRENT}/bin/git_diff_wrapper ~/bin/
 ln -sf ${CURRENT}/.zsh ~
-ln -sf ${CURRENT}/.peco ~
 
 
 # OS毎のバイナリ配置
 case ${OSTYPE} in
     darwin*)
         # Mac用のバイナリ
-        ln -sf ${CURRENT}/bin/mac/peco ~/bin/
         ln -sf ${CURRENT}/bin/mac/exa ~/bin/
         ;;
     linux*)
         # Linux用のバイナリ
-        ln -sf ${CURRENT}/bin/linux/peco ~/bin/
         ln -sf ${CURRENT}/bin/linux/exa ~/bin/
         ln -sf ${CURRENT}/bin/linux/jq ~/bin/
         ;;
