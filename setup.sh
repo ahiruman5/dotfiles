@@ -36,5 +36,6 @@ case ${OSTYPE} in
         ln -sf ${CURRENT}/bin/linux/exa ~/bin/
         ln -sf ${CURRENT}/bin/linux/jq ~/bin/
         ln -sf ${CURRENT}/bin/linux/fzf ~/bin/
+        ln -sf ${CURRENT}/bin/linux/ag ~/bin/
         ;;
 esac
