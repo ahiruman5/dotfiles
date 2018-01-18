@@ -35,5 +35,6 @@ case ${OSTYPE} in
         # Linux用のバイナリ
         ln -sf ${CURRENT}/bin/linux/exa ~/bin/
         ln -sf ${CURRENT}/bin/linux/jq ~/bin/
+        ln -sf ${CURRENT}/bin/linux/fzf ~/bin/
         ;;
 esac
