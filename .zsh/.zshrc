@@ -9,6 +9,10 @@ export EDITOR=vim
 export CORRECT_IGNORE='_*'
 # ファイル名のスペルミス時に無視するパターン
 export CORRECT_IGNORE_FILE='.*'
+# fzfの検索にagを使用
+export FZF_DEFAULT_COMMAND='ag -g ""'
+# fzfの検索位置を上にする
+export FZF_DEFAULT_OPTS='--reverse'
 
 #----------------------------------------------------------
 # zplug
@@ -151,12 +155,14 @@ SPROMPT="( ',_>') { "${fg_yellow}"%R${reset_color}は"${fg_green}"%B%r%b${reset_
 #----------------------------------------------------------
 # zstyle
 #----------------------------------------------------------
-#補完候補を一覧から選択する
+# 補完候補を一覧から選択する
 zstyle ':completion:*:default' menu select=2
-#大文字、小文字を区別せず補完する
+# 大文字、小文字を区別せず補完する
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-#補完時のハイライト設定
+# 補完時のハイライト設定
 zstyle ':completion:*' list-colors ''
+# fzfをanyframeで使用
+zstyle ":anyframe:selector:" use fzf
 
 #----------------------------------------------------------
 # キーバインド
