@@ -30,6 +30,7 @@ case ${OSTYPE} in
     darwin*)
         # Mac用のバイナリ
         ln -sf ${CURRENT}/bin/mac/exa ~/bin/
+        ln -sf ${CURRENT}/bin/mac/fzf ~/bin/
         ;;
     linux*)
         # Linux用のバイナリ
