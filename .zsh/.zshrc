@@ -96,26 +96,26 @@ setopt no_beep
 # dotfilesで管理してるbinディレクトリにPATHを通す
 path=($HOME/bin $path)
 
-#nodebrewを使う場合はPATHを通す
+# nodebrewを使う場合はPATHを通す
 if [ -d $HOME/.nodebrew ]
 then
     path=(~/.nodebrew/current/bin(N-/) $path)
 fi
 
-#pyenvを使う場合はPATHを通す
+# pyenvを使う場合はPATHを通す
 if [ -d $HOME/.pyenv ]
 then
     path=(~/.pyenv/bin(N-/) $path)
     eval "$(pyenv init -)"
 fi
 
-#cargoを使う場合はPATHを通す
+# cargoを使う場合はPATHを通す
 if [ -d $HOME/.cargo ]
 then
     path=(~/.cargo/bin(N-/) $path)
 fi
 
-#パスの重複を除外
+# パスの重複を除外
 typeset -U path cdpath fpath manpath
 
 #----------------------------------------------------------
@@ -166,6 +166,8 @@ bindkey -e
 
 # コマンド履歴からインクリメンタル検索
 bindkey '^R' anyframe-widget-put-history
+# ディレクトリの移動履歴をインクリメンタル検索
+bindkey '^D' anyframe-widget-cdr
 
 # 単語単位のカーソル移動
 bindkey "^H" forward-word
@@ -189,3 +191,9 @@ HISTSIZE=100000
 #----------------------------------------------------------
 # 新規ファイルは644、新規ディレクトリは755
 umask 022
+
+#----------------------------------------------------------
+# ディレクトリの移動履歴を保存
+#----------------------------------------------------------
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+add-zsh-hook chpwd chpwd_recent_dirs
