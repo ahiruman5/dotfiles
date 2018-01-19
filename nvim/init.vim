@@ -195,7 +195,8 @@ let g:gitgutter_max_signs = 1000 " 表示させる差分の最大数
 "----------------------------------------------------------
 " NERDCommenter
 "----------------------------------------------------------
-let NERDSpaceDelims = 1 " コメントアウト時に半角空白を1文字挿入
+let g:NERDSpaceDelims = 1 " コメントアウト時に半角空白を1文字挿入
+let g:NERDDefaultAlign = 'left' " ネストしないようにコメントする
 
 " 「,,」でコメントのオンオフ切り替え
 nmap ,, <Plug>NERDCommenterToggle
