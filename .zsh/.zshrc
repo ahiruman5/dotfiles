@@ -161,8 +161,6 @@ zstyle ':completion:*:default' menu select=2
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 # 補完時のハイライト設定
 zstyle ':completion:*' list-colors ''
-# fzfをanyframeで使用
-zstyle ":anyframe:selector:" use fzf
 
 #----------------------------------------------------------
 # キーバインド
