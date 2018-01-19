@@ -27,7 +27,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'ahiruman5/molokai'
 " Gitを操作するプラグイン
 NeoBundle 'tpope/vim-fugitive'
-" GitのDiffを左恥に表示
+" GitのDiff情報を左端に表示
 NeoBundle 'airblade/vim-gitgutter'
 " ステータスラインの表示内容強化
 NeoBundle 'itchyny/lightline.vim'

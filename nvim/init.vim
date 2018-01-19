@@ -27,7 +27,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'ahiruman5/molokai'
 " Gitを操作するプラグイン
 NeoBundle 'tpope/vim-fugitive'
-" GitのDiffを左恥に表示
+" GitのDiff情報を左端に表示
 NeoBundle 'airblade/vim-gitgutter'
 " ステータスラインの表示内容強化
 NeoBundle 'itchyny/lightline.vim'
@@ -39,38 +39,20 @@ NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'bronson/vim-trailing-whitespace'
 " コメントのオンオフを行う
 NeoBundle 'scrooloose/nerdcommenter'
-" 構文エラーチェック
-NeoBundle 'scrooloose/syntastic'
-" 多機能セレクタ
-NeoBundle 'ctrlpvim/ctrlp.vim'
-" CtrlPの拡張プラグイン. 関数検索
-NeoBundle 'tacahiroy/ctrlp-funky'
-" CtrlPの拡張プラグイン. コマンド履歴検索
-NeoBundle 'suy/vim-ctrlp-commandline'
-" CtrlPの検索にagを使う
-NeoBundle 'rking/ag.vim'
 " HTML5用. HTML5の構文をハイライトする
 NeoBundle 'othree/html5.vim'
 " Javascript用. ES6含めたJavascriptの構文をハイライトする
 NeoBundle 'othree/yajs.vim'
-" Node.js用. プロジェクトに入ってるESLintを読み込む
-NeoBundle 'pmsorhaindo/syntastic-local-eslint.vim'
 " Node.js用. 「gf」でrequireしたモジュールにジャンプ
 NeoBundle 'moll/vim-node'
+" fzf
+NeoBundle 'junegunn/fzf'
+" fzfをvimで利用
+NeoBundle 'junegunn/fzf.vim'
 
 " 遅延読み込みするVimプラグインを以下に記述
 " JSON用. indentLineプラグインの影響でダブルクォーテーションが非表示になっていた問題を解決する
 NeoBundleLazy 'elzr/vim-json',      {'autoload':{'filetypes':['json']}}
-
-" vimのlua機能が使える時だけ以下のVimプラグインをインストールする
-if has('lua')
-    " コードの自動補完
-    NeoBundle 'Shougo/neocomplete.vim'
-    " スニペットの補完機能
-    NeoBundle "Shougo/neosnippet"
-    " スニペット集
-    NeoBundle 'Shougo/neosnippet-snippets'
-endif
 
 " MacOS環境のみインストールする
 if has('mac')
@@ -198,96 +180,7 @@ source $VIMRUNTIME/macros/matchit.vim " Vimの「%」を拡張する
 "----------------------------------------------------------
 " マウスでカーソル移動とスクロール
 "----------------------------------------------------------
-if has('mouse')
-    set mouse=a
-    if has('mouse_sgr')
-        set ttymouse=sgr
-    elseif v:version > 703 || v:version is 703 && has('patch632')
-        set ttymouse=sgr
-    else
-        set ttymouse=xterm2
-    endif
-endif
-
-"----------------------------------------------------------
-" クリップボードからのペースト
-"----------------------------------------------------------
-" 挿入モードでクリップボードからペーストする時に自動でインデントさせないようにする
-if &term =~ "xterm"
-    let &t_SI .= "\e[?2004h"
-    let &t_EI .= "\e[?2004l"
-    let &pastetoggle = "\e[201~"
-
-    function XTermPasteBegin(ret)
-        set paste
-        return a:ret
-    endfunction
-
-    inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
-endif
-
-"----------------------------------------------------------
-" NeoCompleteとNeoSnippet
-"----------------------------------------------------------
-if neobundle#is_installed('neocomplete.vim')
-    " Vim起動時にneocompleteを有効にする
-    let g:neocomplete#enable_at_startup = 1
-    " smartcase有効化. 大文字が入力されるまで大文字小文字の区別を無視する
-    let g:neocomplete#enable_smart_case = 1
-    " 3文字以上の単語に対して補完を有効にする
-    let g:neocomplete#min_keyword_length = 3
-    " 区切り文字まで補完する
-    let g:neocomplete#enable_auto_delimiter = 1
-    " 1文字目の入力から補完のポップアップを表示
-    let g:neocomplete#auto_completion_start_length = 1
-    " バックスペースで補完のポップアップを閉じる
-    inoremap <expr><BS> neocomplete#smart_close_popup()."<C-h>"
-    " エンターキーで補完候補の確定. スニペットの展開もエンターキーで確定
-    imap <expr><CR> neosnippet#expandable() ? "<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "<C-y>" : "<CR>"
-    " タブキーで補完候補の選択. スニペット内のジャンプもタブキーでジャンプ
-    imap <expr><TAB> pumvisible() ? "<C-n>" : neosnippet#jumpable() ? "<Plug>(neosnippet_expand_or_jump)" : "<TAB>"
-endif
-
-"----------------------------------------------------------
-" Syntastic
-"----------------------------------------------------------
-" 構文エラー行に「>>」を表示
-let g:syntastic_enable_signs = 1
-" 他のVimプラグインと競合するのを防ぐ
-let g:syntastic_always_populate_loc_list = 1
-" 構文エラーリストを非表示
-let g:syntastic_auto_loc_list = 0
-" ファイルを開いた時に構文エラーチェックを実行する
-let g:syntastic_check_on_open = 1
-" 「:wq」で終了する時も構文エラーチェックする
-let g:syntastic_check_on_wq = 1
-
-" Javascript用. 構文エラーチェックにESLintを使用
-let g:syntastic_javascript_checkers = ['eslint']
-" Javascript以外は構文エラーチェックをしない
-let g:syntastic_mode_map = { 'mode': 'passive',
-                           \ 'active_filetypes': ['javascript'],
-                           \ 'passive_filetypes': [] }
-
-"----------------------------------------------------------
-" CtrlP
-"----------------------------------------------------------
-let g:ctrlp_match_window = 'order:ttb,min:20,max:20,results:100' " マッチウインドウの設定. 「下部に表示, 大きさ20行で固定, 検索結果100件」
-let g:ctrlp_show_hidden = 1 " .(ドット)から始まるファイルも検索対象にする
-let g:ctrlp_types = ['fil'] "ファイル検索のみ使用
-let g:ctrlp_extensions = ['funky', 'commandline'] " CtrlPの拡張として「funky」と「commandline」を使用
-" let g:ctrlp_prompt_mappings = { 'AcceptSelection("h")': ['<CR>'] } " マッチした検索結果をエンターキーで水平展開
-
-" CtrlPCommandLineの有効化
-command! CtrlPCommandLine call ctrlp#init(ctrlp#commandline#id())
-
-" CtrlPFunkyの絞り込み検索設定
-let g:ctrlp_funky_matchtype = 'path'
-
-if executable('ag')
-  let g:ctrlp_use_caching = 0 " CtrlPのキャッシュを使わない
-  let g:ctrlp_user_command = 'ag %s -i --hidden -g ""' " 「ag」の検索設定
-endif
+set mouse=a
 
 "----------------------------------------------------------
 " vim-fugitive
@@ -309,9 +202,18 @@ nmap ,, <Plug>NERDCommenterToggle
 vmap ,, <Plug>NERDCommenterToggle
 
 "----------------------------------------------------------
-" NERDCommenter
+" vim-anzu
 "----------------------------------------------------------
 nmap n <Plug>(anzu-n-with-echo)
 nmap N <Plug>(anzu-N-with-echo)
-nmap * <Plug>(anzu-star-with-echo)
-nmap # <Plug>(anzu-sharp-with-echo)
+
+"----------------------------------------------------------
+" fzf.vim
+"----------------------------------------------------------
+" Ctrl + Pでファイル検索
+nnoremap <silent> <C-p> :Files<CR>
+" Ctrl + Fでコマンド検索
+nnoremap <silent> <C-f> :Commands<CR>
+" ファイル検索時にプレビューを表示
+command! -bang -nargs=? -complete=dir Files
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)

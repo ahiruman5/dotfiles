@@ -1,6 +1,6 @@
 [core]
-    # 編集に使うエディタをvimにする
-    editor      = vim
+    # 編集に使うエディタをNeoVimにする
+    editor      = nvim
     # ページャを無効(デフォルトはless)
     pager       =
     # 日本語の文字化けを防ぐ

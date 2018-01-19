@@ -10,7 +10,7 @@ export CORRECT_IGNORE='_*'
 # ファイル名のスペルミス時に無視するパターン
 export CORRECT_IGNORE_FILE='.*'
 # fzfの検索にagを使用
-export FZF_DEFAULT_COMMAND='ag --hidden -g ""'
+export FZF_DEFAULT_COMMAND='ag -f --hidden -g ""'
 # fzfの検索オプション. 完全一致. ソートしない. 検索位置を上にする
 export FZF_DEFAULT_OPTS='-e --no-sort --reverse'
 
