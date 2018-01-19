@@ -11,8 +11,8 @@ export CORRECT_IGNORE='_*'
 export CORRECT_IGNORE_FILE='.*'
 # fzfの検索にagを使用
 export FZF_DEFAULT_COMMAND='ag -g ""'
-# fzfの検索位置を上にする
-export FZF_DEFAULT_OPTS='--reverse'
+# fzfの検索オプション. 完全一致. ソートしない. 検索位置を上にする
+export FZF_DEFAULT_OPTS='-e --no-sort --reverse'
 
 #----------------------------------------------------------
 # zplug
