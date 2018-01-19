@@ -14,9 +14,15 @@ then
     mkdir ~/.zsh/
 fi
 
+if [ ! -d ~/.config/nvim/ ]
+then
+    mkdir -p ~/.config/nvim/
+fi
+
 # シンボリックリンク
 ln -sf ${CURRENT}/.bash/.bash_profile ~
 ln -sf ${CURRENT}/.vim/.vimrc ~
+ln -sf ${CURRENT}/nvim/init.vim ~/.config/nvim/
 ln -sf ${CURRENT}/.gitconfig ~
 ln -sf ${CURRENT}/.agignore ~
 ln -sf ${CURRENT}/.dir_colors ~
