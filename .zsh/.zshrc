@@ -135,8 +135,9 @@ alias ag='ag --hidden'
 alias history='history -Di 1'
 # grepで検索した文字列をハイライト
 alias grep='grep --color=auto'
-# grepで検索した文字列をハイライト
+# NeoVim設定
 alias vim='nvim'
+alias vimdiff='nvim -d'
 
 #----------------------------------------------------------
 # PROMPT
