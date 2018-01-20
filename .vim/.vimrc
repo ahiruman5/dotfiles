@@ -32,7 +32,7 @@ NeoBundle 'airblade/vim-gitgutter'
 " ステータスラインの表示内容強化
 NeoBundle 'itchyny/lightline.vim'
 " 検索ヒット数を表示
-NeoBundle "osyo-manga/vim-anzu"
+NeoBundle 'osyo-manga/vim-anzu'
 " インデントの可視化
 NeoBundle 'Yggdroot/indentLine'
 " 末尾の全角半角空白文字を赤くハイライト

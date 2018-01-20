@@ -5,84 +5,71 @@ scriptencoding utf-8
 " Vim Scritptにvimrcも含まれるので、日本語でコメントを書く場合は先頭にこの設定が必要になる
 
 "----------------------------------------------------------
-" NeoBundle
+" vim-plug
 "----------------------------------------------------------
 if has('vim_starting')
-    " 初回起動時のみruntimepathにNeoBundleのパスを指定する
-    set runtimepath+=~/.vim/bundle/neobundle.vim/
-
-    " NeoBundleが未インストールであればgit cloneする
-    if !isdirectory(expand("~/.vim/bundle/neobundle.vim/"))
-        echo "install NeoBundle..."
-        :call system("git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim")
+    " vim-plugが未インストールであればインストールする
+    if !isdirectory(expand('~/.local/share/nvim/site/autoload/'))
+        echo 'install vim-plug...'
+        call system('curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
     endif
 endif
 
-call neobundle#begin(expand('~/.vim/bundle/'))
+call plug#begin('~/.local/share/nvim/site/plugged')
 
 " インストールするVimプラグインを以下に記述
-" NeoBundle自身を管理
-NeoBundleFetch 'Shougo/neobundle.vim'
 " カラースキームmolokai
-NeoBundle 'ahiruman5/molokai'
+Plug 'ahiruman5/molokai'
 " Gitを操作するプラグイン
-NeoBundle 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 " GitのDiff情報を左端に表示
-NeoBundle 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'
 " ステータスラインの表示内容強化
-NeoBundle 'itchyny/lightline.vim'
+Plug 'itchyny/lightline.vim'
 " 検索ヒット数を表示
-NeoBundle "osyo-manga/vim-anzu"
+Plug 'osyo-manga/vim-anzu'
 " インデントの可視化
-NeoBundle 'Yggdroot/indentLine'
+Plug 'Yggdroot/indentLine'
 " 末尾の全角半角空白文字を赤くハイライト
-NeoBundle 'bronson/vim-trailing-whitespace'
+Plug 'bronson/vim-trailing-whitespace'
 " コメントのオンオフを行う
-NeoBundle 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdcommenter'
 " HTML5用. HTML5の構文をハイライトする
-NeoBundle 'othree/html5.vim'
+Plug 'othree/html5.vim'
 " Javascript用. ES6含めたJavascriptの構文をハイライトする
-NeoBundle 'othree/yajs.vim'
+Plug 'othree/yajs.vim'
 " Node.js用. 「gf」でrequireしたモジュールにジャンプ
-NeoBundle 'moll/vim-node'
-" fzf
-NeoBundle 'junegunn/fzf'
+Plug 'moll/vim-node'
 " fzfをvimで利用
-NeoBundle 'junegunn/fzf.vim'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
 
 " 遅延読み込みするVimプラグインを以下に記述
 " JSON用. indentLineプラグインの影響でダブルクォーテーションが非表示になっていた問題を解決する
-NeoBundleLazy 'elzr/vim-json',      {'autoload':{'filetypes':['json']}}
+Plug 'elzr/vim-json', {'for': 'json'}
 
 " MacOS環境のみインストールする
 if has('mac')
     " Markdown編集用プラグイン
-    NeoBundle 'plasticboy/vim-markdown'
+    Plug 'plasticboy/vim-markdown'
     " 文章整形用プラグイン. 主にMarkdownのテーブル用
-    NeoBundle 'h1mesuke/vim-alignta'
+    Plug 'h1mesuke/vim-alignta'
     " Markdownのプレビュー用プラグイン
-    NeoBundle 'kannokanno/previm'
+    Plug 'kannokanno/previm'
     " ブラウザ起動
-    NeoBundle 'tyru/open-browser.vim'
+    Plug 'tyru/open-browser.vim'
 endif
 
-call neobundle#end()
-
-" ファイルタイプ別のVimプラグイン/インデントを有効にする
-filetype plugin indent on
-
-" 未インストールのVimプラグインがある場合、インストールするかどうか尋ねる設定
-NeoBundleCheck
+call plug#end()
 
 "----------------------------------------------------------
 " カラースキーム
 "----------------------------------------------------------
-if neobundle#is_installed('molokai')
+if isdirectory(expand('~/.local/share/nvim/site/plugged/molokai/'))
     colorscheme molokai " カラースキームにmolokaiを設定する
 endif
 
 set t_Co=256 " iTerm2など既に256色環境なら無くても良い
-syntax enable " 構文に色を付ける
 
 "----------------------------------------------------------
 " 文字
@@ -217,4 +204,4 @@ nnoremap <silent> <C-p> :Files<CR>
 nnoremap <silent> <C-f> :Commands<CR>
 " ファイル検索時にプレビューを表示
 command! -bang -nargs=? -complete=dir Files
-  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+            \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
