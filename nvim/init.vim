@@ -34,6 +34,8 @@ Plug 'Yggdroot/indentLine'
 Plug 'bronson/vim-trailing-whitespace'
 " コメントのオンオフを行う
 Plug 'scrooloose/nerdcommenter'
+" 構文エラーチェック
+Plug 'w0rp/ale'
 " HTML5用. HTML5の構文をハイライトする
 Plug 'othree/html5.vim'
 " Javascript用. ES6含めたJavascriptの構文をハイライトする
@@ -205,3 +207,17 @@ nnoremap <silent> <C-f> :Commands<CR>
 " ファイル検索時にプレビューを表示
 command! -bang -nargs=? -complete=dir Files
             \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+
+"----------------------------------------------------------
+" ALE
+"----------------------------------------------------------
+" 使用するLinterをファイル毎に設定
+let g:ale_linters = {'javascript': ['eslint']}
+" Lint情報を常に左端に表示
+let g:ale_sign_column_always = 1
+" エラーと警告の表示設定
+let g:ale_sign_error = '•'
+let g:ale_sign_warning = '•'
+" エラーと警告のカラー設定
+hi ALEErrorSign     ctermfg=196  ctermbg=235
+hi ALEWarningSign   ctermfg=208  ctermbg=235
