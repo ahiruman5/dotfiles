@@ -45,6 +45,12 @@ Plug 'moll/vim-node'
 " fzfをvimで利用
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
+" コードの自動補完
+Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
+" スニペットの補完機能
+Plug 'Shougo/neosnippet'
+" スニペット集
+Plug 'Shougo/neosnippet-snippets'
 
 " 遅延読み込みするVimプラグインを以下に記述
 " JSON用. indentLineプラグインの影響でダブルクォーテーションが非表示になっていた問題を解決する
@@ -207,6 +213,22 @@ nnoremap <silent> <C-f> :Commands<CR>
 " ファイル検索時にプレビューを表示
 command! -bang -nargs=? -complete=dir Files
             \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+
+"----------------------------------------------------------
+" deopleteとneosnippet
+"----------------------------------------------------------
+" Vim起動時にdeopleteを有効にする
+let g:deoplete#enable_at_startup = 1
+" smartcase有効化. 大文字が入力されるまで大文字小文字の区別を無視する
+let g:deoplete#enable_smart_case = 1
+" 区切り文字まで補完する
+let g:deoplete#enable_auto_delimiter = 1
+" バックスペースで補完のポップアップを閉じる
+inoremap <expr><BS> deoplete#smart_close_popup()."<C-h>"
+" エンターキーで補完候補の確定. スニペットの展開もエンターキーで確定
+imap <expr><CR> neosnippet#expandable() ? "<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "<C-y>" : "<CR>"
+" タブキーで補完候補の選択. スニペット内のジャンプもタブキーでジャンプ
+imap <expr><TAB> pumvisible() ? "<C-n>" : neosnippet#jumpable() ? "<Plug>(neosnippet_expand_or_jump)" : "<TAB>"
 
 "----------------------------------------------------------
 " ALE
