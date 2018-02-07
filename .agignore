@@ -1,3 +1,6 @@
 .git
 .nodebrew
+.rbenv
+.pyenv
+.cargo
 *.swp

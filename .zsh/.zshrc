@@ -106,6 +106,13 @@ then
     path=(~/.nodebrew/current/bin(N-/) $path)
 fi
 
+# rbenvを使う場合はPATHを通す
+if [ -d $HOME/.rbenv ]
+then
+    path=(~/.rbenv/bin(N-/) $path)
+    eval "$(rbenv init -)"
+fi
+
 # pyenvを使う場合はPATHを通す
 if [ -d $HOME/.pyenv ]
 then
