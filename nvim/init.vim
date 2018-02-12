@@ -25,7 +25,8 @@ Plug 'tpope/vim-fugitive'
 " GitのDiff情報を左端に表示
 Plug 'airblade/vim-gitgutter'
 " ステータスラインの表示内容強化
-Plug 'itchyny/lightline.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 " 検索ヒット数を表示
 Plug 'osyo-manga/vim-anzu'
 " インデントの可視化
@@ -104,10 +105,7 @@ endif
 "----------------------------------------------------------
 " ステータスライン
 "----------------------------------------------------------
-set laststatus=2 " ステータスラインを常に表示
-set showmode " 現在のモードを表示
-set showcmd " 打ったコマンドをステータスラインの下に表示
-set ruler " ステータスラインの右側にカーソルの現在位置を表示する
+let g:airline_theme = 'onedark' " vim-airlineのカラーテーマにonedarkを使用
 
 "----------------------------------------------------------
 " コマンドモード
@@ -213,6 +211,8 @@ nnoremap <silent> <C-f> :Commands<CR>
 " ファイル検索時にプレビューを表示
 command! -bang -nargs=? -complete=dir Files
             \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+" Agコマンド実行時にプレビューを表示
+command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 "----------------------------------------------------------
 " deopleteとneosnippet
