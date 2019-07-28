@@ -216,6 +216,8 @@ command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, fzf#vim#with_preview(), <ba
 "----------------------------------------------------------
 " deopleteとneosnippet
 "----------------------------------------------------------
+" pythonのパス指定
+let g:python3_host_prog = system('type pyenv &>/dev/null && echo -n "$(pyenv root)/versions/$(cat $(pyenv root)/version | head -n 1)/bin/python" || echo -n $(which python)')
 " Vim起動時にdeopleteを有効にする
 let g:deoplete#enable_at_startup = 1
 " smartcase有効化. 大文字が入力されるまで大文字小文字の区別を無視する
