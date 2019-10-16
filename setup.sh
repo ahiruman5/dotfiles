@@ -25,7 +25,6 @@ ln -sf ${CURRENT}/.vim/.vimrc ~
 ln -sf ${CURRENT}/nvim/init.vim ~/.config/nvim/
 ln -sf ${CURRENT}/.gitconfig ~
 ln -sf ${CURRENT}/.agignore ~
-ln -sf ${CURRENT}/.dir_colors ~
 ln -sf ${CURRENT}/bin/git_diff_wrapper ~/bin/
 ln -sf ${CURRENT}/.zsh/.zshenv ~/.zsh/
 ln -sf ${CURRENT}/.zsh/.zshrc ~/.zsh/
