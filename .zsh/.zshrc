@@ -100,27 +100,33 @@ setopt no_beep
 # dotfilesで管理してるbinディレクトリにPATHを通す
 path=($HOME/bin $path)
 
-# nodebrewを使う場合はPATHを通す
+# fzfのPATH設定
+if [ -d $HOME/.fzf ]
+then
+    path=(~/.fzf/bin(N-/) $path)
+fi
+
+# nodebrewのPATH設定
 if [ -d $HOME/.nodebrew ]
 then
     path=(~/.nodebrew/current/bin(N-/) $path)
 fi
 
-# rbenvを使う場合はPATHを通す
+# rbenvのPATH設定
 if [ -d $HOME/.rbenv ]
 then
     path=(~/.rbenv/bin(N-/) $path)
     eval "$(rbenv init -)"
 fi
 
-# pyenvを使う場合はPATHを通す
+# pyenvのPATH設定
 if [ -d $HOME/.pyenv ]
 then
     path=(~/.pyenv/bin(N-/) $path)
-    eval "$(pyenv init -)"
+    eval "$(pyenv init --path)"
 fi
 
-# cargoを使う場合はPATHを通す
+# cargoのPATH設定
 if [ -d $HOME/.cargo ]
 then
     path=(~/.cargo/bin(N-/) $path)

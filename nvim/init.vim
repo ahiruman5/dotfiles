@@ -221,7 +221,7 @@ let g:python3_host_prog = system('type pyenv &>/dev/null && echo -n "$(pyenv roo
 " Vim起動時にdeopleteを有効にする
 let g:deoplete#enable_at_startup = 1
 " smartcase有効化. 大文字が入力されるまで大文字小文字の区別を無視する
-let g:deoplete#enable_smart_case = 1
+call deoplete#custom#option('smart_case', v:true)
 " 区切り文字まで補完する
 let g:deoplete#enable_auto_delimiter = 1
 " バックスペースで補完のポップアップを閉じる

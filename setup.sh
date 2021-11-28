@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # dotfilesのPATHを取得
 CURRENT=$(cd $(dirname $0) && pwd)
@@ -28,7 +28,6 @@ ln -sf ${CURRENT}/.agignore ~
 ln -sf ${CURRENT}/bin/git_diff_wrapper ~/bin/
 ln -sf ${CURRENT}/.zsh/.zshenv ~/.zsh/
 ln -sf ${CURRENT}/.zsh/.zshrc ~/.zsh/
-
 
 # OS毎のバイナリ配置
 case ${OSTYPE} in
