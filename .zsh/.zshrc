@@ -162,7 +162,7 @@ local fg_yellow=$'%{\e[38;5;3m%}%}'
 local fg_blue=$'%{\e[38;5;4m%}%}'
 
 # 通常のプロンプト
-PURE_PROMPT_SYMBOL='❯❯❯'
+PURE_PROMPT_SYMBOL='%B%F{1}❯%F{3}❯%F{2}❯%f%b'
 
 # スペル訂正時のプロンプト
 SPROMPT="( ',_>') { "${fg_yellow}"%R${reset_color}は"${fg_green}"%B%r%b${reset_color}の間違いかね?
