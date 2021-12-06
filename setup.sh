@@ -19,6 +19,11 @@ then
     mkdir -p ~/.config/nvim/
 fi
 
+# zplugが未インストールであればインストールする
+if [ ! -e "${HOME}/.zplug" ]; then
+  curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+fi
+
 # シンボリックリンク
 ln -sf ${CURRENT}/.bash/.bash_profile ~
 ln -sf ${CURRENT}/.vim/.vimrc ~
@@ -28,19 +33,3 @@ ln -sf ${CURRENT}/.agignore ~
 ln -sf ${CURRENT}/bin/git_diff_wrapper ~/bin/
 ln -sf ${CURRENT}/.zsh/.zshenv ~/.zsh/
 ln -sf ${CURRENT}/.zsh/.zshrc ~/.zsh/
-
-# OS毎のバイナリ配置
-case ${OSTYPE} in
-    darwin*)
-        # Mac用のバイナリ
-        ln -sf ${CURRENT}/bin/mac/exa ~/bin/
-        ln -sf ${CURRENT}/bin/mac/fzf ~/bin/
-        ;;
-    linux*)
-        # Linux用のバイナリ
-        ln -sf ${CURRENT}/bin/linux/exa ~/bin/
-        ln -sf ${CURRENT}/bin/linux/jq ~/bin/
-        ln -sf ${CURRENT}/bin/linux/fzf ~/bin/
-        ln -sf ${CURRENT}/bin/linux/ag ~/bin/
-        ;;
-esac

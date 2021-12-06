@@ -17,11 +17,6 @@ export FZF_DEFAULT_OPTS='-e --reverse'
 #----------------------------------------------------------
 # zplug
 #----------------------------------------------------------
-# zplugが未インストールであればインストールする
-if [ ! -d ~/.zplug ]; then
-    curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh| zsh
-fi
-
 # init.zsh読み込み
 source ~/.zplug/init.zsh
 
